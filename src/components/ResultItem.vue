@@ -1,0 +1,1 @@
+<!-- Singola card di ogni risultato (repository di Github) -->
