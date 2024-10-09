@@ -38,15 +38,16 @@ export default {
 }
 
 .result-item {
-  width: 80%;
+  width: 100%;
   border: 1px solid #ccc;
-  padding: 16px;
+  padding: 2rem;
   margin-bottom: 16px;
   text-align: left;
 }
 
 .result-item h3 {
   margin-top: 0;
+  text-decoration: double;
 }
 
 .result-item p {

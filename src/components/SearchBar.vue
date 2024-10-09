@@ -49,12 +49,15 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  padding: 1rem;
 }
 
 .search-bar input {
-  width: 300px;
-  padding: 8px;
+  width: 70vh;
+  padding: 1.2rem;
   margin-right: 10px;
+  border-radius: 5rem;
+  height: 3rem;
 }
 
 .search-bar button {
