@@ -3,72 +3,33 @@
 <!-- Qui va la logica del componente (Vue3 + Javascript) -->
 <script>
     export default {
+        name: 'SearchBar',
         data() {
             return {
-            query: '',
-            searchType: 'repositories', // 'repositories' o 'users'
-            results: [],
-            isLoading: false,
-            errorMessage: ''
+                query: '',
             };
         },
 
 
-    /* CONTINUARE DA QUI */
+    methods: {
+        onSearch() {
+            this.$emit('search', this.query);
+        },
+        },
     };
-
-
-
-/* Funzioni o Metodi */
-methods: {
-    async search() {
-        if (this.query.trim().length < 3) {
-        this.errorMessage = 'Inserisci almeno 3 caratteri.';
-        return;
-        }
-
-        this.isLoading = true;
-        this.errorMessage = '';
-
-        const endpoint = `https://api.github.com/search/${this.searchType}`;
-        const params = new URLSearchParams({
-        q: this.query,
-        sort: 'stars',
-        order: 'desc'
-        });
-
-        try {
-            const response = await fetch(`${endpoint}?${params.toString()}`);
-            const data = await response.json();
-
-        if (data.items.length === 0) {
-            this.errorMessage = 'Nessun risultato trovato.';
-        } else {
-            this.results = data.items;
-        }
-        } catch (error) {
-        console.error('Errore:', error);
-        this.errorMessage = 'Si è verificato un errore durante la ricerca.';
-        } finally {
-            this.isLoading = false;
-        }
-    }
-}
-
 </script>
 
 
 
 <!-- Qui va il contenuto di questo elemento (HTML) -->
 <template>
-    <div>
-      <input type="text" v-model="query" @input="onInput" placeholder="Cerca su GitHub..." />
-      <select v-model="searchType">
-        <option value="repositories">Repository</option>
-        <option value="users">Utenti/Organizzazioni</option>
-      </select>
-      <button @click="search">Cerca</button>
-      <p v-if="errorMessage">{{ errorMessage }}</p>
+    <div class="search-bar">
+      <input
+        type="text"
+        v-model="query"
+        placeholder="Cerca repository su GitHub..."
+      />
+      <button @click="onSearch">Cerca</button>
     </div>
 </template>
   
@@ -77,7 +38,19 @@ methods: {
 
 <!-- Qui va lo stile CSS di questo elemento (CSS) -->
 <style scoped>
-button {
-  font-weight: bold;
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.search-bar button {
+  padding: 8px 16px;
 }
 </style>
