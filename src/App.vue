@@ -28,38 +28,38 @@ export default {
     };
   },
   methods: {
-    async performSearch(query) {
-      if (query.trim().length < 3) {
-        this.errorMessage = 'Inserisci almeno 3 caratteri per la ricerca.';
-        this.results = [];
-        return;
-      }
-
-      this.isLoading = true;
-      this.errorMessage = '';
+  async performSearch({ query, searchType }) {
+    if (query.trim().length < 3) {
+      this.errorMessage = 'Inserisci almeno 3 caratteri per la ricerca.';
       this.results = [];
+      return;
+    }
 
-      const endpoint = `https://api.github.com/search/repositories?q=${encodeURIComponent(
-        query
-      )}`;
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.results = [];
 
-      try {
-        const response = await fetch(endpoint);
-        const data = await response.json();
+    const endpoint = `https://api.github.com/search/${searchType}?q=${encodeURIComponent(
+      query
+    )}`;
 
-        if (data.items && data.items.length > 0) {
-          this.results = data.items;
-        } else {
-          this.errorMessage = 'Nessun risultato trovato.';
-        }
-      } catch (error) {
-        console.error('Errore nella ricerca:', error);
-        this.errorMessage = 'Si è verificato un errore durante la ricerca.';
-      } finally {
-        this.isLoading = false;
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+
+      if (data.items && data.items.length > 0) {
+        this.results = data.items;
+      } else {
+        this.errorMessage = 'Nessun risultato trovato.';
       }
-    },
+    } catch (error) {
+      console.error('Errore nella ricerca:', error);
+      this.errorMessage = 'Si è verificato un errore durante la ricerca.';
+    } finally {
+      this.isLoading = false;
+    }
   },
+},
 };
 </script>
 

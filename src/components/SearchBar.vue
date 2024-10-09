@@ -2,21 +2,23 @@
 
 <!-- Qui va la logica del componente (Vue3 + Javascript) -->
 <script>
-    export default {
-        name: 'SearchBar',
-        data() {
-            return {
-                query: '',
-            };
-        },
-
-
-    methods: {
-        onSearch() {
-            this.$emit('search', this.query);
-        },
-        },
+export default {
+  name: 'SearchBar',
+  data() {
+    return {
+      query: '',
+      searchType: 'repositories',
     };
+  },
+  methods: {
+    onSearch() {
+      this.$emit('search', {
+        query: this.query,
+        searchType: this.searchType,
+      });
+    },
+  },
+};
 </script>
 
 
@@ -27,11 +29,16 @@
       <input
         type="text"
         v-model="query"
-        placeholder="Cerca repository su GitHub..."
+        placeholder="Cerca su GitHub..."
       />
+      <select v-model="searchType">
+        <option value="repositories">Repository</option>
+        <option value="users">Utenti/Organizzazioni</option>
+      </select>
       <button @click="onSearch">Cerca</button>
     </div>
 </template>
+  
   
 
 
